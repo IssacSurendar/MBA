@@ -1,0 +1,102 @@
+{% extends 'snippets/_base.html' %}
+{% load static %}
+{% block main %}
+<div id="aboutus-banner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 my-auto text-white text-center my-auto">
+                <h1 class="mb-4 fw-light">How we Bring Creativity to Life ?<br>CannnyDigit Blog</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="blogsection1">
+    <div class="container-fluid">
+        <div class="row p-lg-5 px-3 my-4">
+            <div class="col-lg-8">
+                <div class="row">
+
+                    {% for blog in blogs %}
+                    <div class="col-lg-6 mb-4">
+                        <div class="card">
+                            <div class="img-top">
+                                <img src="static/{{blog.Banner_Image}}" width="100%" alt="">
+                            </div>
+                            <div class="card-body">
+                                <h6 class="fw-bold">{{ blog.Title }}</h6>
+                                <div class="fa-14 text-secondary five-lines">
+                                    {{ blog.Description | safe |truncatewords:50 }}</div>
+                                <a href="{% url 'blogdesc' slug=blog.Slug %}" class="btn btn-orange float-end mt-3">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                    {% if blogs.has_other_pages %}
+                    <nav aria-label="...">
+                        <ul class="pagination mb-0 d-flex justify-content-end">
+                            {% if blogs.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ blogs.previous_page_number }}"
+                                    tabindex="-1">Previous</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            {% endif %}
+                            {% for i in blogs.paginator.page_range %}
+                            {% if blogs.number == i %}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="?page={{ i }}">{{i}}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if blogs.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ blogs.next_page_number }}">Next</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-disabled="true">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <form action="">
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control" name="blogs" placeholder="Search" aria-label="Search"
+                            aria-describedby="button-addon2">
+                        <button class="btn btn-orange" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </form>
+                <div class="card p-3">
+                    <h6 class="fw-bold mb-4">Recent Posts</h6>
+                    {% for recent_blog in recent_blogs %}
+                    <div class="row">
+                        <div class="col-3 my-auto">
+                            <img src="static/{{recent_blog.Banner_Image}}" width="100%" alt="">
+                        </div>
+                        <div class="col-9">
+                            <a class="text-reset" href="">
+                                <h6 class="">{{recent_blog.Title}}</h6>
+                                <div class="fa-14 mb-0 text-secondary">{{ recent_blog.Description | safe | truncatewords:12}}</div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main %}
