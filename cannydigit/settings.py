@@ -25,7 +25,7 @@ SECRET_KEY = '4w0oemmq^8xu+m-t2eitawu+of^v9s^^wa+7zt4&qw18fia3ty'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['143.110.240.21', '143.110.240.21:8000']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -119,8 +120,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = BASE_DIR,'static'
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'static')
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# STATIC_URL = '/static/'
+# # STATICFILES_DIRS = BASE_DIR,'static'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# MEDIA_ROOT =  os.path.join(BASE_DIR, 'static')
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_URL = '/static/'
+#STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+import os
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+TEMPLATE_DIRS = (
+    os.path.join(SETTINGS_PATH, 'templates'),
+)
