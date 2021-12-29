@@ -76,12 +76,26 @@ WSGI_APPLICATION = 'cannydigit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'cannydigit',
+            'USER': 'root',
+            'PASSWORD': 'Canny@1234',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
+
 
 
 # Password validation
@@ -120,25 +134,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# STATIC_URL = '/static/'
-# # STATICFILES_DIRS = BASE_DIR,'static'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = BASE_DIR,'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # MEDIA_ROOT =  os.path.join(BASE_DIR, 'static')
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_URL = '/static/'
-#STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-import os
-SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
-TEMPLATE_DIRS = (
-    os.path.join(SETTINGS_PATH, 'templates'),
-)
